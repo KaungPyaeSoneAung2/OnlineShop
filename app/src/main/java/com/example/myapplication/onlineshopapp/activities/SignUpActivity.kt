@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.widget.Toast
 import com.example.myapplication.onlineshopapp.R
 import com.example.myapplication.onlineshopapp.databinding.ActivitySignUpBinding
+import com.example.myapplication.onlineshopapp.model.User
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -91,8 +92,16 @@ class SignUpActivity : AppCompatActivity() {
                     OnCompleteListener<AuthResult> { task ->
                         if(task.isSuccessful){
                          val firebaseUser: FirebaseUser = task.result!!.user!!
+                            val user = User(
+                                firebaseUser.uid,
+                                binding.firstNameSignUp.text.toString(),
+                                binding.lastNameSignUp.text.toString(),
+                                binding.emailSignUp.text.toString(),
 
-                            Toast.makeText(this, "Welcome. Your Id is ${firebaseUser.uid}", Toast.LENGTH_SHORT).show()
+                            )
+//                            Toast.makeText(this, "Welcome. Your Id is ${firebaseUser.uid}", Toast.LENGTH_SHORT).show()
+                            FirebaseAuth.getInstance().signOut()
+                            finish()
                         }
                         else{
                             Toast.makeText(this, task.exception!!.message.toString(), Toast.LENGTH_SHORT).show()
@@ -101,7 +110,9 @@ class SignUpActivity : AppCompatActivity() {
                 )
 
         }
+    }
 
-
+    private fun registerUserSuccess(){
+        Toast.makeText(this, "Welcome to our Store Mr. ${binding.firstNameSignUp.text.toString()}", Toast.LENGTH_SHORT).show()
     }
 }

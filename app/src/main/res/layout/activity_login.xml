@@ -38,7 +38,7 @@
     android:gravity="center"
     android:layout_marginTop="20dp"/>
     <EditText
-        android:id="@+id/nameLogin"
+        android:id="@+id/emailLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/topTextLogin"
@@ -55,7 +55,7 @@
         android:id="@+id/pwLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/nameLogin"
+        app:layout_constraintTop_toBottomOf="@+id/emailLogin"
         android:fontFamily="@font/josefinsansbold"
         android:layout_marginTop="15dp"
         android:hint="@string/passwordLogin"

@@ -14,6 +14,9 @@
         android:theme="@style/Theme.OnlineShop"
         tools:targetApi="31">
         <activity
+            android:name=".activities.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.SignUpActivity"
             android:exported="false" />
         <activity
@@ -21,8 +24,7 @@
             android:exported="false" />
         <activity
             android:name=".activities.PopUpStartShowActivity"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

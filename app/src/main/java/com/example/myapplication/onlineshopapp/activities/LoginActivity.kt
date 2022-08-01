@@ -3,17 +3,14 @@ package com.example.myapplication.onlineshopapp.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import com.example.myapplication.onlineshopapp.R
 import com.example.myapplication.onlineshopapp.databinding.ActivityLoginBinding
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -40,12 +37,15 @@ class LoginActivity : AppCompatActivity() {
 
         binding.noAccountSignUp.setOnClickListener{
             Intent(this,SignUpActivity::class.java).also { startActivity(it) }
-            finish()
         }
 
         binding.buttonLogin.setOnClickListener {
-            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
+            logInRegisteredUser()
+
         }
+
+
+        ///////////////////////////////////////////////////////////////////////////
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -60,6 +60,40 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun validateLoginDetails():Boolean {
+    return when{
+        TextUtils.isEmpty(binding.emailLogin.text.toString().trim { it<= ' '})|| !binding.emailLogin.text.contains("mail.com")->{
+            Toast.makeText(this, "First Name Error", Toast.LENGTH_SHORT).show()
+            false
+        }
+        TextUtils.isEmpty(binding.pwLogin.text.toString().trim { it<= ' '})->{
+            Toast.makeText(this, "Password Error", Toast.LENGTH_SHORT).show()
+            false
+        }
+        else ->{
+            true
+        }
+    }
+    }
+
+    private fun logInRegisteredUser(){
+        if (validateLoginDetails()){
+            val email = binding.emailLogin.text.toString().trim{it <= ' '}
+            val pw = binding.pwLogin.text.toString().trim{it <= ' '}
+
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email,pw)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Welcome Sir", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "You wish, Try Again MF", Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+        }
+    }
+
 
     override fun onStart() {
         super.onStart()

@@ -1,6 +1,18 @@
 <resources>
     <string name="app_name">NiceShop</string>
-    <string name="nameLogin">Login</string>
+    <string name="Login">Login</string>
     <string name="passwordLogin">Password</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="topimagenothingparticular">topImageNothingParticular</string>
+    <string name="emailLogin">Email</string>
+    <string name="create_an_account">Create An Account</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="i_agree_to_the_terms_and_conditions">I agree to the Terms and Conditions</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="have_an_account_login">Have an Account? Login</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
 </resources>

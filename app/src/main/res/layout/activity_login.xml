@@ -109,22 +109,22 @@
         android:fontFamily="@font/josefinsansbold"
         android:textSize="18sp"
         />
-    <ImageView
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        app:layout_constraintTop_toBottomOf="@+id/loginvia"
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@color/purple_500"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="125dp"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/loginvia" />
+
     <ImageView
         android:layout_width="65dp"
         android:layout_height="65dp"
-        app:layout_constraintTop_toBottomOf="@+id/loginvia"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="164dp"
         android:src="@color/purple_500"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="125dp"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginvia" />
 </androidx.constraintlayout.widget.ConstraintLayout>

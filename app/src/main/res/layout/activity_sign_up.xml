@@ -7,27 +7,28 @@
     tools:context=".activities.SignUpActivity"
     >
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/materialToolbar"
-        android:layout_width="391dp"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/topToolBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="4dp" >
+        android:backgroundTint="@color/white">
 
         <TextView
             android:id="@+id/topTextSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/josefinsansbold"
             android:gravity="center"
+            android:layout_marginEnd="16dp"
             android:text="@string/create_an_account"
             android:textSize="35sp"
             app:layout_constraintTop_toTopOf="parent" />
-    </com.google.android.material.appbar.MaterialToolbar>
+    </androidx.appcompat.widget.Toolbar>
 
 
 
@@ -35,9 +36,9 @@
         android:id="@+id/firstNameSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/topTextSignUp"
+        app:layout_constraintTop_toTopOf="parent"
         android:fontFamily="@font/josefinsansbold"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="65dp"
         android:hint="@string/first_name"
         android:textSize="25sp"
         android:paddingStart="25dp"
@@ -138,5 +139,4 @@
         android:textSize="18sp"
         android:gravity="center"
         />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

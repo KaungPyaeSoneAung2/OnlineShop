@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.widget.Toast
 import com.example.myapplication.onlineshopapp.R
 import com.example.myapplication.onlineshopapp.databinding.ActivitySignUpBinding
+import com.example.myapplication.onlineshopapp.firestore.FireStore
 import com.example.myapplication.onlineshopapp.model.User
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
@@ -90,18 +91,21 @@ class SignUpActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,pw)
                 .addOnCompleteListener(
                     OnCompleteListener<AuthResult> { task ->
+                        //here is successful check
                         if(task.isSuccessful){
                          val firebaseUser: FirebaseUser = task.result!!.user!!
                             val user = User(
                                 firebaseUser.uid,
-                                binding.firstNameSignUp.text.toString(),
-                                binding.lastNameSignUp.text.toString(),
-                                binding.emailSignUp.text.toString(),
-
+                                binding.firstNameSignUp.text.toString().trim{it <= ' '},
+                                binding.lastNameSignUp.text.toString().trim{it <= ' '},
+                                binding.emailSignUp.text.toString().trim{it <= ' '},
                             )
 //                            Toast.makeText(this, "Welcome. Your Id is ${firebaseUser.uid}", Toast.LENGTH_SHORT).show()
-                            FirebaseAuth.getInstance().signOut()
-                            finish()
+
+                            FireStore().signupUser(this, user)
+
+                            //FirebaseAuth.getInstance().signOut()
+                            //finish()
                         }
                         else{
                             Toast.makeText(this, task.exception!!.message.toString(), Toast.LENGTH_SHORT).show()
@@ -112,7 +116,7 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun registerUserSuccess(){
+    fun userRegistrationSuccess(){
         Toast.makeText(this, "Welcome to our Store Mr. ${binding.firstNameSignUp.text.toString()}", Toast.LENGTH_SHORT).show()
     }
 }

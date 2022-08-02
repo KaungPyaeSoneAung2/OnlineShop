@@ -8,6 +8,8 @@ import android.util.Log
 import android.widget.Toast
 import com.example.myapplication.onlineshopapp.R
 import com.example.myapplication.onlineshopapp.databinding.ActivityLoginBinding
+import com.example.myapplication.onlineshopapp.firestore.FireStore
+import com.example.myapplication.onlineshopapp.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -85,22 +87,23 @@ class LoginActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email,pw)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(this, "Welcome Sir", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this, "Welcome Sir", Toast.LENGTH_SHORT).show()
+                        FireStore().getUserDetails(this)
                     } else {
-                        Toast.makeText(this, "You wish, Try Again MF", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, task.exception!!.message.toString(), Toast.LENGTH_SHORT).show()
 
                     }
                 }
         }
     }
 
-
+    //This is firebase Credit system Don't touch
     override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
         updateUI(currentUser)
     }
-
+    //This is firebase Credit system Don't touch
     private fun updateUI(user: FirebaseUser?) {
         //this go to main activtiy
         if(user==null){
@@ -111,7 +114,7 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
-
+    //This is firebase Credit system Don't touch
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode== RC_GOOGLE_SIGN_IN){
@@ -125,6 +128,8 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+    //This is firebase Credit system Don't touch
     private fun firebaseAuthWithGoogle(idToken: String){
         val credential = GoogleAuthProvider.getCredential(idToken,null)
         auth.signInWithCredential(credential)
@@ -140,6 +145,14 @@ class LoginActivity : AppCompatActivity() {
                     updateUI(null)
                 }
             }
+    }
+
+    fun userLoggedInSuccess(user: User) {
+        Log.i("First Name: ",user.firstName)
+        Log.i("Last Name: ",user.lastName)
+        Log.i("First Name: ",user.email)
+        startActivity(Intent(this,MainActivity::class.java))
+        finish()
     }
 
 }

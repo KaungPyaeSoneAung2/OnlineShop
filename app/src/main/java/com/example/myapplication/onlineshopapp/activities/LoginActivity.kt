@@ -122,6 +122,7 @@ class LoginActivity : AppCompatActivity() {
             try {
                 val account = task.getResult(ApiException::class.java)!!
                 Log.d(TAG, "firebaseAuthWithGoogle"+account.id)
+
                 firebaseAuthWithGoogle(account.idToken!!)
             }catch (e: ApiException){
                 Log.w(TAG, "Google sign in failed",e)
@@ -137,6 +138,13 @@ class LoginActivity : AppCompatActivity() {
                 if(task.isSuccessful){
                     Log.d(TAG,"signInWithCredential:success")
                     val user= auth.currentUser
+                    val userAdapt = User(
+                        user?.uid.toString(),
+                        user?.displayName.toString(),
+                        " ",
+                        user?.email.toString(),
+                    )
+                    FireStore().signupUser(this@LoginActivity,userAdapt)
                     updateUI(user)
                 }
                 else{

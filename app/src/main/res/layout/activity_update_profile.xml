@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.UpdateProfileActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/topToolBarCompleteProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/topTextComplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/josefinsansbold"
+            android:text="Complete Profile"
+            android:textSize="25sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/imageUserUpdate"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_baseline_account_box_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topToolBarCompleteProfile" />
+
+    <EditText
+        android:id="@+id/firstNameUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="15dp"
+        android:hint="First Name"
+        android:inputType="textPersonName"
+        android:paddingStart="25dp"
+        android:paddingEnd="10dp"
+        android:textSize="25sp"
+        app:layout_constraintTop_toBottomOf="@+id/imageUserUpdate" />
+
+    <EditText
+        android:id="@+id/lastNameUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:fontFamily="@font/josefinsansbold"
+        android:hint="Last Name"
+        android:inputType="textPersonName"
+        android:paddingStart="25dp"
+        android:textSize="25sp"
+        app:layout_constraintTop_toBottomOf="@+id/firstNameUpdate" />
+
+    <EditText
+        android:id="@+id/emailUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:fontFamily="@font/josefinsansbold"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:paddingStart="25dp"
+        android:textSize="25sp"
+        app:layout_constraintTop_toBottomOf="@+id/lastNameUpdate" />
+
+    <EditText
+        android:id="@+id/phNumberUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:fontFamily="@font/josefinsansbold"
+        android:hint="Ph number"
+        android:inputType="phone"
+        android:paddingStart="25dp"
+        android:textSize="25sp"
+        app:layout_constraintTop_toBottomOf="@+id/emailUpdate" />
+
+    <EditText
+        android:id="@+id/addressUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/josefinsansbold"
+        android:hint="Address"
+        android:inputType="textPostalAddress"
+        android:paddingStart="25dp"
+        android:textSize="25sp"
+        app:layout_constraintTop_toBottomOf="@+id/phNumberUpdate" />
+    <Button
+        android:id="@+id/maleUpdate"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/addressUpdate"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="Male"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:fontFamily="@font/josefinsansbold"
+        android:layout_marginEnd="170dp"/>
+    <Button
+        android:id="@+id/femaleUpdate"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/addressUpdate"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="Female"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/josefinsansbold"
+        android:layout_marginStart="170dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/addressUpdate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="55sp"
+        android:text="Save"
+        android:fontFamily="@font/josefinsansbold"
+        android:textSize="25sp"
+        />
+    <TextView
+        android:layout_width="70dp"
+        android:layout_height="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/josefinsansbold"
+        android:text="NiceShop"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:background="@drawable/app_background"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

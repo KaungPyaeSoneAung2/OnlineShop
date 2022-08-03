@@ -103,7 +103,6 @@ class SignUpActivity : AppCompatActivity() {
 //                            Toast.makeText(this, "Welcome. Your Id is ${firebaseUser.uid}", Toast.LENGTH_SHORT).show()
 
                             FireStore().signupUser(this, user)
-
                             //FirebaseAuth.getInstance().signOut()
                             //finish()
                         }

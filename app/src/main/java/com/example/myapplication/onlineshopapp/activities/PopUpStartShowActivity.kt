@@ -25,7 +25,7 @@ class PopUpStartShowActivity : AppCompatActivity() {
         }
         @Suppress("DEPRECATION")
         Handler().postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, UpdateProfileActivity::class.java))
             finish()
         },3000)
 

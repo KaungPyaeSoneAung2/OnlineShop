@@ -1,17 +1,13 @@
 package com.example.myapplication.onlineshopapp.activities
 
+import GlideLoader
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
+import android.text.TextUtils
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -23,6 +19,7 @@ import java.io.IOException
 
 class UpdateProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUpdateProfileBinding
+    private lateinit var userDetails: User
 //    var startForResult: ActivityResultLauncher<Intent> =
 //        registerForActivityResult(ActivityResultContracts.StartActivityForResult(),
 //            ActivityResultCallback<ActivityResult> {
@@ -60,7 +57,7 @@ class UpdateProfileActivity : AppCompatActivity() {
         binding = ActivityUpdateProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
         genderSelectioinButton(0)
-        var userDetails: User = User()
+        userDetails = User()
         if (intent.hasExtra(Constants.EXTRA_USER_DETAIL)) {
             userDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAIL)!!
         }
@@ -73,6 +70,15 @@ class UpdateProfileActivity : AppCompatActivity() {
         binding.emailUpdate.isEnabled=false
         binding.emailUpdate.setText(userDetails.email)
 
+        binding.saveButtonUpdate.setOnClickListener {
+            if(validateUserInfos()){
+                val userHashMap= HashMap<String,Any>()
+                val mobileNumber = binding.phNumberUpdate.text.toString().trim{ it <= ' '}
+                val genderResult = genderSelectioinButton(0)
+                Toast.makeText(this, genderResult.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        }
 
         binding.imageUserUpdate.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
@@ -115,7 +121,8 @@ class UpdateProfileActivity : AppCompatActivity() {
                 if (data != null) {
                     try {
                         val selectedImageFileUri = data.data!!
-                        binding.imageUserUpdate.setImageURI(Uri.parse(selectedImageFileUri.toString()))
+                        //binding.imageUserUpdate.setImageURI(Uri.parse(selectedImageFileUri.toString()))
+                        GlideLoader(this).loadUserPicture(selectedImageFileUri,binding.imageUserUpdate)
                     } catch (e: IOException) {
                         e.printStackTrace()
                         Toast.makeText(this, "iamge selection failed", Toast.LENGTH_SHORT).show()
@@ -129,6 +136,19 @@ class UpdateProfileActivity : AppCompatActivity() {
         }
         else{
             Toast.makeText(this, "result wasn't okay", Toast.LENGTH_SHORT).show()}
+    }
+
+
+    private fun validateUserInfos():Boolean{
+        return when{
+            TextUtils.isEmpty(binding.phNumberUpdate.text.toString().trim{ it <= ' '}) ->{
+                Toast.makeText(this, "Please enter your mobile number", Toast.LENGTH_SHORT).show()
+                false
+            }
+            else ->{
+                true
+            }
+        }
     }
 
 

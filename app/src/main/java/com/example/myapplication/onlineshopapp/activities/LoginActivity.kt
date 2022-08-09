@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
+import com.example.myapplication.onlineshopapp.Constants
 import com.example.myapplication.onlineshopapp.R
 import com.example.myapplication.onlineshopapp.databinding.ActivityLoginBinding
 import com.example.myapplication.onlineshopapp.firestore.FireStore
@@ -159,7 +160,14 @@ class LoginActivity : AppCompatActivity() {
         Log.i("First Name: ",user.firstName)
         Log.i("Last Name: ",user.lastName)
         Log.i("First Name: ",user.email)
-        startActivity(Intent(this,MainActivity::class.java))
+
+        if(user.profileComple==0){
+            Intent(this,UpdateProfileActivity::class.java)
+                .putExtra(Constants.EXTRA_USER_DETAIL,user).also { startActivity(it) }
+
+        }
+        else{
+        startActivity(Intent(this,MainActivity::class.java))}
         finish()
     }
 

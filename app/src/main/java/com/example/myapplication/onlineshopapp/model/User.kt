@@ -12,5 +12,6 @@ class User (
     val image: String=" ",
     val mobile: Long=0,
     val gender: Int=0,
+    val address: String=" ",
     val profileComple: Int = 0,
     ): Parcelable

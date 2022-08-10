@@ -5,6 +5,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
@@ -14,12 +15,15 @@ import androidx.core.content.ContextCompat
 import com.example.myapplication.onlineshopapp.Constants
 import com.example.myapplication.onlineshopapp.R
 import com.example.myapplication.onlineshopapp.databinding.ActivityUpdateProfileBinding
+import com.example.myapplication.onlineshopapp.firestore.FireStore
 import com.example.myapplication.onlineshopapp.model.User
 import java.io.IOException
 
 class UpdateProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUpdateProfileBinding
     private lateinit var userDetails: User
+    private var selectedImageUri: Uri? = null
+    private var selectedImageURL: String = " "
 //    var startForResult: ActivityResultLauncher<Intent> =
 //        registerForActivityResult(ActivityResultContracts.StartActivityForResult(),
 //            ActivityResultCallback<ActivityResult> {
@@ -56,7 +60,7 @@ class UpdateProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        genderSelectioinButton(0)
+        val genderResult=genderSelectioinButton(0)
         userDetails = User()
         if (intent.hasExtra(Constants.EXTRA_USER_DETAIL)) {
             userDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAIL)!!
@@ -71,11 +75,22 @@ class UpdateProfileActivity : AppCompatActivity() {
         binding.emailUpdate.setText(userDetails.email)
 
         binding.saveButtonUpdate.setOnClickListener {
+            FireStore().uploadImageToCloudStorage(this,selectedImageUri)
             if(validateUserInfos()){
                 val userHashMap= HashMap<String,Any>()
                 val mobileNumber = binding.phNumberUpdate.text.toString().trim{ it <= ' '}
-                val genderResult = genderSelectioinButton(0)
-                Toast.makeText(this, genderResult.toString(), Toast.LENGTH_SHORT).show()
+                if (mobileNumber.isNotEmpty()){
+                    userHashMap[Constants.MOBILE]=mobileNumber.toLong()
+                }
+
+                val userImage=selectedImageUri.toString()
+                if (userImage.isNotEmpty()){
+                    userHashMap[Constants.USERIMAGE]=userImage
+                }
+
+                val gender = genderResult
+                userHashMap[Constants.GENDER]=gender
+                FireStore().updateUserProfileData(this,userHashMap)
             }
 
         }
@@ -120,9 +135,9 @@ class UpdateProfileActivity : AppCompatActivity() {
             if (requestCode == Constants.IMAGE_REQUEST_CODE) {
                 if (data != null) {
                     try {
-                        val selectedImageFileUri = data.data!!
+                        selectedImageUri = data.data!!
                         //binding.imageUserUpdate.setImageURI(Uri.parse(selectedImageFileUri.toString()))
-                        GlideLoader(this).loadUserPicture(selectedImageFileUri,binding.imageUserUpdate)
+                        GlideLoader(this).loadUserPicture(selectedImageUri!!,binding.imageUserUpdate)
                     } catch (e: IOException) {
                         e.printStackTrace()
                         Toast.makeText(this, "iamge selection failed", Toast.LENGTH_SHORT).show()
@@ -149,6 +164,9 @@ class UpdateProfileActivity : AppCompatActivity() {
                 true
             }
         }
+    }
+    fun imageUploadSuccess(imageURL: String){
+        Toast.makeText(this, "your image is $imageURL", Toast.LENGTH_SHORT).show()
     }
 
 

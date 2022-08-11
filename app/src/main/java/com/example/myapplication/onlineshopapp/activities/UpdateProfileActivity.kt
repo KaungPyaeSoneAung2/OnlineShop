@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -74,37 +75,6 @@ class UpdateProfileActivity : AppCompatActivity() {
         binding.emailUpdate.isEnabled=false
         binding.emailUpdate.setText(userDetails.email)
 
-        binding.saveButtonUpdate.setOnClickListener {
-
-            if(validateUserInfos()){
-
-                if(selectedImageUri!=null){
-                FireStore().uploadImageToCloudStorage(this,selectedImageUri)
-                }
-
-                val userHashMap= HashMap<String,Any>()
-                if(selectedImageUri.toString().isNotEmpty()){
-                    userHashMap[Constants.USERIMAGE]=selectedImageUri.toString()
-                }
-                val mobileNumber = binding.phNumberUpdate.text.toString().trim{ it <= ' '}
-                if (mobileNumber.isNotEmpty()){
-                    userHashMap[Constants.MOBILE]=mobileNumber.toLong()
-                }
-
-                val gender = genderResult
-                userHashMap[Constants.GENDER]=gender
-
-                val address = binding.addressUpdate.text.toString()
-                if (address.isNotEmpty()){
-                    userHashMap[Constants.ADDRESS]=address
-                }
-
-                userHashMap[Constants.PROFILE_COMPLETE]=1
-                FireStore().updateUserProfileData(this,userHashMap)
-
-            }
-        }
-
         binding.imageUserUpdate.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
                     this, Manifest.permission.READ_EXTERNAL_STORAGE
@@ -120,6 +90,34 @@ class UpdateProfileActivity : AppCompatActivity() {
                 )
             }
         }
+
+        binding.saveButtonUpdate.setOnClickListener {
+
+            if(validateUserInfos()){
+                val userHashMap= HashMap<String,Any>()
+                if(selectedImageUri!=null){
+                     FireStore().uploadImageToCloudStorage(this,selectedImageUri)
+
+                }
+                val mobileNumber = binding.phNumberUpdate.text.toString().trim{ it <= ' '}
+                if (mobileNumber.isNotEmpty()){
+                    userHashMap[Constants.MOBILE]=mobileNumber.toLong()
+                }
+
+                val gender = genderResult
+                userHashMap[Constants.GENDER]=gender
+
+                val address = binding.addressUpdate.text.toString()
+                if (address.isNotEmpty()){
+                    userHashMap[Constants.ADDRESS]=address
+                }
+
+                userHashMap[Constants.PROFILE_COMPLETE]=0
+                FireStore().updateUserProfileData(this,userHashMap)
+            }
+        }
+
+
     }
 
 
@@ -147,7 +145,7 @@ class UpdateProfileActivity : AppCompatActivity() {
                     try {
                         selectedImageUri = data.data!!
                         //binding.imageUserUpdate.setImageURI(Uri.parse(selectedImageFileUri.toString()))
-                        GlideLoader(this).loadUserPicture(selectedImageUri!!,binding.imageUserUpdate)
+                        GlideLoader(this).loadUserPicture(selectedImageUri.toString(),binding.imageUserUpdate)
                     } catch (e: IOException) {
                         e.printStackTrace()
                         Toast.makeText(this, "iamge selection failed", Toast.LENGTH_SHORT).show()
@@ -178,6 +176,7 @@ class UpdateProfileActivity : AppCompatActivity() {
     }
     fun imageUploadSuccess(imageURL: String){
         selectedImageURL=imageURL
+        Log.e("Downloadable URL", imageURL.toString())
     }
 
 

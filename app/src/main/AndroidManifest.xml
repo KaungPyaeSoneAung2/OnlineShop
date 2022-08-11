@@ -16,6 +16,9 @@
         android:theme="@style/Theme.OnlineShop"
         tools:targetApi="31">
         <activity
+            android:name=".activities.AddProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.DashBoardActivity"
             android:exported="false"
             android:label="@string/title_activity_dash_board" />
@@ -30,6 +33,9 @@
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".activities.PopUpStartShowActivity"

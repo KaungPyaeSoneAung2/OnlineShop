@@ -30,7 +30,11 @@ class ProductsFragment : Fragment() {
 
         val textView: TextView = binding.textHome
         homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = "This is home Fragment"
+            //textView.text = "This is home Fragment"
+
+        }
+        binding.btnAdd.setOnClickListener{
+
         }
         return root
     }

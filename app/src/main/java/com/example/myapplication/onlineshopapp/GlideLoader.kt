@@ -8,7 +8,7 @@ import com.example.myapplication.onlineshopapp.R
 import java.io.IOException
 
 class GlideLoader(val context:Context) {
-    fun loadUserPicture(imageUri: Uri, imageView: ImageView){
+    fun loadUserPicture(imageUri: String, imageView: ImageView){
         try {
             Glide.with(context)
                 .load(imageUri)

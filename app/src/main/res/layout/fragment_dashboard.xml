@@ -6,17 +6,86 @@
     android:layout_height="match_parent"
     tools:context=".ui.dashboard.DashboardFragment">
 
-    <TextView
-        android:id="@+id/text_dashboard"
+<!--    <ImageView-->
+<!--        android:id="@+id/imageUserDashboard"-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="120dp"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/ic_baseline_account_box_24"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:layout_marginTop="65dp"/>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/NameDashboard"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginEnd="15dp"-->
+<!--        android:hint="Name"-->
+<!--        android:inputType="textPersonName"-->
+<!--        android:paddingStart="25dp"-->
+<!--        android:paddingEnd="10dp"-->
+<!--        android:textSize="25sp"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/imageUserDashboard"-->
+<!--        />-->
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/emailDashboard"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginEnd="15dp"-->
+<!--        android:fontFamily="@font/josefinsansbold"-->
+<!--        android:hint="Email"-->
+<!--        android:inputType="textEmailAddress"-->
+<!--        android:paddingStart="25dp"-->
+<!--        android:textSize="25sp"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/NameDashboard" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/phNumberDashboard"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginEnd="15dp"-->
+<!--        android:fontFamily="@font/josefinsansbold"-->
+<!--        android:hint="Ph number"-->
+<!--        android:inputType="phone"-->
+<!--        android:paddingStart="25dp"-->
+<!--        android:textSize="25sp"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/emailDashboard" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/addressDashboard"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginEnd="15dp"-->
+<!--        android:fontFamily="@font/josefinsansbold"-->
+<!--        android:hint="Address"-->
+<!--        android:inputType="textPostalAddress"-->
+<!--        android:paddingStart="25dp"-->
+<!--        android:textSize="25sp"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/phNumberDashboard" />-->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/addressDashboard">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

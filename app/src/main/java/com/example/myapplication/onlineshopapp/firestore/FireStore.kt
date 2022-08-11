@@ -6,14 +6,11 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import com.example.myapplication.onlineshopapp.Constants
-import com.example.myapplication.onlineshopapp.activities.LoginActivity
-import com.example.myapplication.onlineshopapp.activities.MainActivity
-import com.example.myapplication.onlineshopapp.activities.SignUpActivity
-import com.example.myapplication.onlineshopapp.activities.UpdateProfileActivity
+import com.example.myapplication.onlineshopapp.activities.*
+import com.example.myapplication.onlineshopapp.model.Posts
 import com.example.myapplication.onlineshopapp.model.User
+import com.example.myapplication.onlineshopapp.ui.dashboard.DashboardFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -70,6 +67,9 @@ class FireStore {
                     is LoginActivity -> {
                         activity.userLoggedInSuccess(user)
                     }
+                    is  SettingsActivity->{
+                        activity.UserDetailsSuccess(user)
+                    }
                 }
             }
             .addOnFailureListener { e ->
@@ -77,11 +77,12 @@ class FireStore {
             }
     }
 
+
     fun updateUserProfileData(activity: Activity, userHashMap: HashMap<String, Any>) {
         mFireStore.collection(Constants.Users).document(getCurrentUserID())
             .update(userHashMap)
             .addOnSuccessListener {
-                Intent(activity, MainActivity::class.java).also { activity.startActivity(it) }
+                Intent(activity, DashBoardActivity::class.java).also { activity.startActivity(it) }
             }
             .addOnFailureListener { e ->
                 Log.e(
@@ -108,9 +109,13 @@ class FireStore {
             taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
             )
             taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {uri ->
-                Log.e("Downloadable Image URL", uri.toString())
+                val userHashMap= HashMap<String,Any>()
+                    userHashMap[Constants.Image]=uri
+                FireStore().updateUserProfileData(activity,userHashMap)
+
                 when(activity){
                     is UpdateProfileActivity -> {
+                        Log.e("Downloadable Image URL", uri.toString())
                         activity.imageUploadSuccess(uri.toString())
                     }
                 }
@@ -125,4 +130,60 @@ class FireStore {
                 )
             }
     }
+
+
+    //------------------------------Line of unknown----------------------------------------------------------------------------------
+
+//    fun AddPost(activity: Activity, postInfo: Posts) {
+//        mFireStore.collection(Constants.Posts)
+//            .document(postInfo.postID)
+//            .set(postInfo, SetOptions.merge())
+//            .addOnSuccessListener {
+//                //activity.userRegistrationSuccess()
+//            }
+//            .addOnFailureListener { e ->
+//                Log.e(
+//                    activity.javaClass.simpleName,
+//                    "Error while uploading the post"
+//                )
+//            }
+//    }
+//    fun getPosterID(): String {
+//        val currentUser = FirebaseAuth.getInstance().currentUser
+//        var currentUserID = ""
+//        if (currentUser != null) {
+//            currentUserID = currentUser.uid
+//        }
+//        return currentUserID
+//    }
+//    fun getPostDetails(activity: Activity) {
+//        mFireStore.collection(Constants.Posts)
+//            .document(getCurrentUserID())
+//            .get()
+//            .addOnSuccessListener { document ->
+//                Log.i(activity.javaClass.simpleName, document.toString())
+//                val poster = document.toObject(Posts::class.java)!!
+//                val sharedPreference = activity.getSharedPreferences(
+//                    Constants.POSTING_PREFERENCES,
+//                    Context.MODE_PRIVATE
+//                )
+//                val editor: SharedPreferences.Editor = sharedPreference.edit()
+//                editor.putString(
+//                    Constants.LOGGED_IN_USERNAME,
+//                    "${poster.firstName}"
+//                )
+//                editor.apply()
+//
+//                when (activity) {
+//                    is  DashBoardActivity->{
+//                        //DashboardFragment().UserDetailsSuccess(user)
+//                    }
+//                }
+//            }
+//            .addOnFailureListener { e ->
+//
+//            }
+//    }
+
+
 }

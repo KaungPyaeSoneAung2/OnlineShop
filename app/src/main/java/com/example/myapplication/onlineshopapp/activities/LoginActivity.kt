@@ -111,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
             Log.w(TAG,"User is null, not going to navigate")
             return
         }
-        startActivity(Intent(this,MainActivity::class.java))
+        startActivity(Intent(this,DashBoardActivity::class.java))
         finish()
     }
 
@@ -167,7 +167,7 @@ class LoginActivity : AppCompatActivity() {
 
         }
         else{
-        startActivity(Intent(this,MainActivity::class.java))}
+        startActivity(Intent(this,DashBoardActivity::class.java))}
         finish()
     }
 

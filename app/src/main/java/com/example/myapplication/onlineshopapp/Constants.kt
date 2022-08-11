@@ -19,9 +19,27 @@ object Constants {
 
     const val MOBILE: String = "mobile"
     const val GENDER: String = "gender"
-    const val USERIMAGE: String = "image"
+    const val USERIMAGE: String = "UserImage"
+    const val Image:String="image"
     const val ADDRESS: String = "address"
     const val PROFILE_COMPLETE: String = "profileComple"
+
+    const val Posts: String ="posts"
+    //const val LOGGED_IN_USERNAME: String = "logged_in_userName"
+    //const val EXTRA_USER_DETAIL: String = "extra_user_detail"
+    //const val READ_STORAGE_PERMISSION_CODE = 2
+    const val Post_IMAGE_REQUEST_CODE = 4
+    const val Post_Image:String ="postimage"
+    const val Post_Caption:String ="postCapt"
+    const val Post_Desc:String ="postiDesc"
+    //const val MOBILE: String = "mobile"
+    //const val PostIMAGE: String = "image"
+    const val POSTING_PREFERENCES: String = "postingPrefs"
+    //const val ADDRESS: String = "address"
+
+
+
+
 
     fun showImageChooser(activity: Activity) {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)

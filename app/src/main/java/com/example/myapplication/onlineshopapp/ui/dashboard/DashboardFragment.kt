@@ -30,11 +30,10 @@ class DashboardFragment : Fragment() {
 
         val textView: TextView = binding.textDashboard
         dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+            textView.text = "This is dashboard Fragment"
         }
         return root
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

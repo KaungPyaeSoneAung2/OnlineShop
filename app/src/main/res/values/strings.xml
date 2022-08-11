@@ -16,7 +16,7 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="title_activity_dash_board">DashBoardActivity</string>
-    <string name="title_home">Home</string>
+    <string name="title_products">Products</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_orders">Orders</string>
 </resources>

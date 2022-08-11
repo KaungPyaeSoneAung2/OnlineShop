@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.myapplication.onlineshopapp">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,6 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineShop"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.DashBoardActivity"
+            android:exported="false"
+            android:label="@string/title_activity_dash_board" />
         <activity
             android:name=".activities.UpdateProfileActivity"
             android:exported="false" />

@@ -1,6 +1,6 @@
 package com.example.myapplication.onlineshopapp.activities
 
-import GlideLoader
+import com.example.myapplication.onlineshopapp.GlideLoader
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
@@ -75,24 +75,34 @@ class UpdateProfileActivity : AppCompatActivity() {
         binding.emailUpdate.setText(userDetails.email)
 
         binding.saveButtonUpdate.setOnClickListener {
-            FireStore().uploadImageToCloudStorage(this,selectedImageUri)
+
             if(validateUserInfos()){
+
+                if(selectedImageUri!=null){
+                FireStore().uploadImageToCloudStorage(this,selectedImageUri)
+                }
+
                 val userHashMap= HashMap<String,Any>()
+                if(selectedImageUri.toString().isNotEmpty()){
+                    userHashMap[Constants.USERIMAGE]=selectedImageUri.toString()
+                }
                 val mobileNumber = binding.phNumberUpdate.text.toString().trim{ it <= ' '}
                 if (mobileNumber.isNotEmpty()){
                     userHashMap[Constants.MOBILE]=mobileNumber.toLong()
                 }
 
-                val userImage=selectedImageUri.toString()
-                if (userImage.isNotEmpty()){
-                    userHashMap[Constants.USERIMAGE]=userImage
-                }
-
                 val gender = genderResult
                 userHashMap[Constants.GENDER]=gender
-                FireStore().updateUserProfileData(this,userHashMap)
-            }
 
+                val address = binding.addressUpdate.text.toString()
+                if (address.isNotEmpty()){
+                    userHashMap[Constants.ADDRESS]=address
+                }
+
+                userHashMap[Constants.PROFILE_COMPLETE]=1
+                FireStore().updateUserProfileData(this,userHashMap)
+
+            }
         }
 
         binding.imageUserUpdate.setOnClickListener {
@@ -154,6 +164,7 @@ class UpdateProfileActivity : AppCompatActivity() {
     }
 
 
+
     private fun validateUserInfos():Boolean{
         return when{
             TextUtils.isEmpty(binding.phNumberUpdate.text.toString().trim{ it <= ' '}) ->{
@@ -166,7 +177,7 @@ class UpdateProfileActivity : AppCompatActivity() {
         }
     }
     fun imageUploadSuccess(imageURL: String){
-        Toast.makeText(this, "your image is $imageURL", Toast.LENGTH_SHORT).show()
+        selectedImageURL=imageURL
     }
 
 

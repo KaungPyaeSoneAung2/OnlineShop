@@ -192,8 +192,6 @@ class FireStore {
             }
             .addOnFailureListener { e ->
 
-                // Hide the progress dialog if there is an error.
-                fragment.hideProgressDialog()
 
                 Log.e(
                     fragment.requireActivity().javaClass.simpleName,

@@ -5,15 +5,18 @@
       <map>
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.259" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.14" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_add_product.xml" value="0.225" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_add_product.xml" value="0.33" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_dash_board.xml" value="0.25" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_forgot_password.xml" value="0.225" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_settings.xml" value="0.15657894736842104" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_sign_up.xml" value="0.22" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_splash.xml" value="0.225" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_update_profile.xml" value="0.33" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/fragment_dashboard.xml" value="0.2" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/fragment_notifications.xml" value="0.225" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/fragment_orders.xml" value="0.225" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/fragment_products.xml" value="0.225" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/menu/add_product_menu.xml" value="0.22324561403508772" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/menu/bottom_nav_menu.xml" value="0.225" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/menu/dashboard_menu.xml" value="0.225" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.109" />

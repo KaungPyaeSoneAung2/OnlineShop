@@ -11,6 +11,7 @@ import com.example.myapplication.onlineshopapp.activities.*
 import com.example.myapplication.onlineshopapp.model.Posts
 import com.example.myapplication.onlineshopapp.model.User
 import com.example.myapplication.onlineshopapp.ui.dashboard.DashboardFragment
+import com.example.myapplication.onlineshopapp.ui.home.ProductsFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -82,8 +83,12 @@ class FireStore {
         mFireStore.collection(Constants.Users).document(getCurrentUserID())
             .update(userHashMap)
             .addOnSuccessListener {
-                Intent(activity, DashBoardActivity::class.java).also { activity.startActivity(it) }
-            }
+                when (activity) {
+                    is UpdateProfileActivity -> {
+                        // Call a function of base activity for transferring the result to it.
+                        activity.userProfileUpdateSuccess()
+                    }
+            }}
             .addOnFailureListener { e ->
                 Log.e(
                     activity.javaClass.simpleName,
@@ -94,7 +99,7 @@ class FireStore {
 
     }
 
-    fun uploadImageToCloudStorage(activity: Activity, imageFileUri: Uri?) {
+    fun uploadImageToCloudStorage(activity: Activity, imageFileUri: Uri?, imageType:String?) {
         //used to determine image file path
         val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
             Constants.USERIMAGE + System.currentTimeMillis() + " "
@@ -109,9 +114,6 @@ class FireStore {
             taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
             )
             taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {uri ->
-                val userHashMap= HashMap<String,Any>()
-                    userHashMap[Constants.Image]=uri
-                FireStore().updateUserProfileData(activity,userHashMap)
 
                 when(activity){
                     is UpdateProfileActivity -> {
@@ -130,60 +132,103 @@ class FireStore {
                 )
             }
     }
+    fun uploadProductDetails(activity: AddProductActivity, productInfo: Posts) {
+
+        mFireStore.collection(Constants.PRODUCTS)
+            .document()
+            // Here the userInfo are Field and the SetOption is set to merge. It is for if we wants to merge
+            .set(productInfo, SetOptions.merge())
+            .addOnSuccessListener {
+
+                // Here call a function of base activity for transferring the result to it.
+                activity.productUploadSuccess()
+            }
+            .addOnFailureListener { e ->
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while uploading the product details.",
+                    e
+                )
+            }
+    }
+    fun getDashboardItemsList(fragment: DashboardFragment) {
+        // The collection name for PRODUCTS
+        mFireStore.collection(Constants.PRODUCTS)
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+
+                // Here we get the list of boards in the form of documents.
+                Log.e(fragment.javaClass.simpleName, document.documents.toString())
+
+                // Here we have created a new instance for Products ArrayList.
+                val productsList: ArrayList<Posts> = ArrayList()
+
+                // A for loop as per the list of documents to convert them into Products ArrayList.
+                for (i in document.documents) {
+
+                    val post = i.toObject(Posts::class.java)!!
+                     post.postID= i.id
+                    productsList.add(post)
+                }
+
+                // Pass the success result to the base fragment.
+                fragment.successDashboardItemsList(productsList)
+            }
+            .addOnFailureListener { e ->
+                Log.e(fragment.javaClass.simpleName, "Error while getting dashboard items list.", e)
+            }
+    }
+
+    fun deleteProduct(fragment: ProductsFragment, productId: String) {
+
+        mFireStore.collection(Constants.PRODUCTS)
+            .document(productId)
+            .delete()
+            .addOnSuccessListener {
+
+                // Notify the success result to the base class.
+                fragment.productDeleteSuccess()
+            }
+            .addOnFailureListener { e ->
+
+                // Hide the progress dialog if there is an error.
+                fragment.hideProgressDialog()
+
+                Log.e(
+                    fragment.requireActivity().javaClass.simpleName,
+                    "Error while deleting the product.",
+                    e
+                )
+            }
+    }
+
+    fun getProductDetails(activity: ProductDetailsActivity, productId: String) {
+
+        // The collection name for PRODUCTS
+        mFireStore.collection(Constants.PRODUCTS)
+            .document(productId)
+            .get() // Will get the document snapshots.
+            .addOnSuccessListener { document ->
+
+                // Here we get the product details in the form of document.
+                Log.e(activity.javaClass.simpleName, document.toString())
+
+                // Convert the snapshot to the object of Product data model class.
+                val product = document.toObject(Product::class.java)!!
+
+                activity.productDetailsSuccess(product)
+            }
+            .addOnFailureListener { e ->
+
+                // Hide the progress dialog if there is an error.
+                activity.hideProgressDialog()
+
+                Log.e(activity.javaClass.simpleName, "Error while getting the product details.", e)
+            }
+    }
 
 
-    //------------------------------Line of unknown----------------------------------------------------------------------------------
-
-//    fun AddPost(activity: Activity, postInfo: Posts) {
-//        mFireStore.collection(Constants.Posts)
-//            .document(postInfo.postID)
-//            .set(postInfo, SetOptions.merge())
-//            .addOnSuccessListener {
-//                //activity.userRegistrationSuccess()
-//            }
-//            .addOnFailureListener { e ->
-//                Log.e(
-//                    activity.javaClass.simpleName,
-//                    "Error while uploading the post"
-//                )
-//            }
-//    }
-//    fun getPosterID(): String {
-//        val currentUser = FirebaseAuth.getInstance().currentUser
-//        var currentUserID = ""
-//        if (currentUser != null) {
-//            currentUserID = currentUser.uid
-//        }
-//        return currentUserID
-//    }
-//    fun getPostDetails(activity: Activity) {
-//        mFireStore.collection(Constants.Posts)
-//            .document(getCurrentUserID())
-//            .get()
-//            .addOnSuccessListener { document ->
-//                Log.i(activity.javaClass.simpleName, document.toString())
-//                val poster = document.toObject(Posts::class.java)!!
-//                val sharedPreference = activity.getSharedPreferences(
-//                    Constants.POSTING_PREFERENCES,
-//                    Context.MODE_PRIVATE
-//                )
-//                val editor: SharedPreferences.Editor = sharedPreference.edit()
-//                editor.putString(
-//                    Constants.LOGGED_IN_USERNAME,
-//                    "${poster.firstName}"
-//                )
-//                editor.apply()
-//
-//                when (activity) {
-//                    is  DashBoardActivity->{
-//                        //DashboardFragment().UserDetailsSuccess(user)
-//                    }
-//                }
-//            }
-//            .addOnFailureListener { e ->
-//
-//            }
-//    }
-
+    //------------------------------Line of untested codes----------------------------------------------------------------------------------
 
 }

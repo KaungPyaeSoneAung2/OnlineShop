@@ -11,6 +11,7 @@ object Constants {
     const val NICESHOP_PREFERENCES: String = "NiceShopPrefs"
     const val LOGGED_IN_USERNAME: String = "logged_in_userName"
     const val EXTRA_USER_DETAIL: String = "extra_user_detail"
+
     const val READ_STORAGE_PERMISSION_CODE = 2
     const val IMAGE_REQUEST_CODE = 1
 
@@ -24,18 +25,9 @@ object Constants {
     const val ADDRESS: String = "address"
     const val PROFILE_COMPLETE: String = "profileComple"
 
-    const val Posts: String ="posts"
-    //const val LOGGED_IN_USERNAME: String = "logged_in_userName"
-    //const val EXTRA_USER_DETAIL: String = "extra_user_detail"
-    //const val READ_STORAGE_PERMISSION_CODE = 2
-    const val Post_IMAGE_REQUEST_CODE = 4
-    const val Post_Image:String ="postimage"
-    const val Post_Caption:String ="postCapt"
-    const val Post_Desc:String ="postiDesc"
-    //const val MOBILE: String = "mobile"
-    //const val PostIMAGE: String = "image"
-    const val POSTING_PREFERENCES: String = "postingPrefs"
-    //const val ADDRESS: String = "address"
+    const val EXTRA_PRODUCT_ID: String = "extra_product_id"
+    const val PRODUCTS: String = "products"
+    const val PRODUCT_IMAGE: String = "Product_Image"
 
 
 

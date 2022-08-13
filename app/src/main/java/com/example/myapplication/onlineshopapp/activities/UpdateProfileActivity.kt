@@ -61,7 +61,6 @@ class UpdateProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val genderResult=genderSelectioinButton(0)
         userDetails = User()
         if (intent.hasExtra(Constants.EXTRA_USER_DETAIL)) {
             userDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAIL)!!
@@ -72,7 +71,7 @@ class UpdateProfileActivity : AppCompatActivity() {
         binding.lastNameUpdate.isEnabled = false
         binding.lastNameUpdate.setText(userDetails.lastName)
 
-        binding.emailUpdate.isEnabled=false
+        binding.emailUpdate.isEnabled = false
         binding.emailUpdate.setText(userDetails.email)
 
         binding.imageUserUpdate.setOnClickListener {
@@ -93,27 +92,15 @@ class UpdateProfileActivity : AppCompatActivity() {
 
         binding.saveButtonUpdate.setOnClickListener {
 
-            if(validateUserInfos()){
-                val userHashMap= HashMap<String,Any>()
-                if(selectedImageUri!=null){
-                     FireStore().uploadImageToCloudStorage(this,selectedImageUri)
+            if (validateUserInfos()) {
 
+                if (selectedImageUri != null) {
+                    FireStore().uploadImageToCloudStorage(this, selectedImageUri,Constants.USERIMAGE)
                 }
-                val mobileNumber = binding.phNumberUpdate.text.toString().trim{ it <= ' '}
-                if (mobileNumber.isNotEmpty()){
-                    userHashMap[Constants.MOBILE]=mobileNumber.toLong()
+                else{
+                    updateUserProfileDetails()
                 }
 
-                val gender = genderResult
-                userHashMap[Constants.GENDER]=gender
-
-                val address = binding.addressUpdate.text.toString()
-                if (address.isNotEmpty()){
-                    userHashMap[Constants.ADDRESS]=address
-                }
-
-                userHashMap[Constants.PROFILE_COMPLETE]=0
-                FireStore().updateUserProfileData(this,userHashMap)
             }
         }
 
@@ -145,7 +132,10 @@ class UpdateProfileActivity : AppCompatActivity() {
                     try {
                         selectedImageUri = data.data!!
                         //binding.imageUserUpdate.setImageURI(Uri.parse(selectedImageFileUri.toString()))
-                        GlideLoader(this).loadUserPicture(selectedImageUri.toString(),binding.imageUserUpdate)
+                        GlideLoader(this).loadUserPicture(
+                            selectedImageUri.toString(),
+                            binding.imageUserUpdate
+                        )
                     } catch (e: IOException) {
                         e.printStackTrace()
                         Toast.makeText(this, "iamge selection failed", Toast.LENGTH_SHORT).show()
@@ -153,32 +143,59 @@ class UpdateProfileActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this, "there was no data", Toast.LENGTH_SHORT).show()
                 }
+            } else {
+                Toast.makeText(this, "request code didn't match", Toast.LENGTH_SHORT).show()
             }
-            else{
-                Toast.makeText(this, "request code didn't match", Toast.LENGTH_SHORT).show()}
+        } else {
+            Toast.makeText(this, "result wasn't okay", Toast.LENGTH_SHORT).show()
         }
-        else{
-            Toast.makeText(this, "result wasn't okay", Toast.LENGTH_SHORT).show()}
     }
 
 
-
-    private fun validateUserInfos():Boolean{
-        return when{
-            TextUtils.isEmpty(binding.phNumberUpdate.text.toString().trim{ it <= ' '}) ->{
+    private fun validateUserInfos(): Boolean {
+        return when {
+            TextUtils.isEmpty(binding.phNumberUpdate.text.toString().trim { it <= ' ' }) -> {
                 Toast.makeText(this, "Please enter your mobile number", Toast.LENGTH_SHORT).show()
                 false
             }
-            else ->{
+            else -> {
                 true
             }
         }
     }
-    fun imageUploadSuccess(imageURL: String){
-        selectedImageURL=imageURL
-        Log.e("Downloadable URL", imageURL.toString())
+
+    private fun updateUserProfileDetails() {
+        val userHashMap = HashMap<String, Any>()
+        val genderResult = genderSelectioinButton(0)
+        val mobileNumber = binding.phNumberUpdate.text.toString().trim { it <= ' ' }
+        if (mobileNumber.isNotEmpty()) {
+            userHashMap[Constants.MOBILE] = mobileNumber.toLong()
+        }
+
+        val gender = genderResult
+        userHashMap[Constants.GENDER] = gender
+
+        val address = binding.addressUpdate.text.toString()
+        if (address.isNotEmpty()) {
+            userHashMap[Constants.ADDRESS] = address
+        }
+
+        userHashMap[Constants.PROFILE_COMPLETE] = 1
+        FireStore().updateUserProfileData(this, userHashMap)
+
     }
 
+
+    fun userProfileUpdateSuccess(){
+        startActivity(Intent(this, DashBoardActivity::class.java))
+        finish()
+    }
+
+    fun imageUploadSuccess(imageURL: String) {
+        selectedImageURL = imageURL
+        Log.e("Downloadable URL", imageURL.toString())
+        updateUserProfileDetails()
+    }
 
 
     private fun genderSelectioinButton(genderRes: Int): Int {

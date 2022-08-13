@@ -16,6 +16,9 @@
         android:theme="@style/Theme.OnlineShop"
         tools:targetApi="31">
         <activity
+            android:name=".ProductDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AddProductActivity"
             android:exported="false" />
         <activity

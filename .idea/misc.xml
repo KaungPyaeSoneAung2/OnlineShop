@@ -8,14 +8,17 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_add_product.xml" value="0.33" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_dash_board.xml" value="0.25" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_forgot_password.xml" value="0.225" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_product_details.xml" value="0.33" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_settings.xml" value="0.15657894736842104" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_sign_up.xml" value="0.22" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_splash.xml" value="0.225" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/activity_update_profile.xml" value="0.33" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/dashboard_items_layout.xml" value="0.23423423423423423" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/fragment_dashboard.xml" value="0.2" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/fragment_notifications.xml" value="0.225" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/fragment_orders.xml" value="0.225" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/fragment_products.xml" value="0.225" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/layout/item_list_layout.xml" value="0.26510416666666664" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/menu/add_product_menu.xml" value="0.22324561403508772" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/menu/bottom_nav_menu.xml" value="0.225" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/OnlineShop - Copy/app/src/main/res/menu/dashboard_menu.xml" value="0.225" />

@@ -3,26 +3,20 @@ package com.example.myapplication.onlineshopapp.ui.dashboard
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.onlineshopapp.Constants
-import com.example.myapplication.onlineshopapp.GlideLoader
 import com.example.myapplication.onlineshopapp.R
 import com.example.myapplication.onlineshopapp.activities.DashBoardActivity
+import com.example.myapplication.onlineshopapp.activities.ProductDetailsActivity
 import com.example.myapplication.onlineshopapp.activities.SettingsActivity
-import com.example.myapplication.onlineshopapp.adapter.DashboardItemsListAdapter
 import com.example.myapplication.onlineshopapp.databinding.FragmentDashboardBinding
 import com.example.myapplication.onlineshopapp.firestore.FireStore
 import com.example.myapplication.onlineshopapp.model.Posts
-import com.example.myapplication.onlineshopapp.model.User
-import com.google.firebase.firestore.FirebaseFirestore
+import com.myshoppal.ui.adapters.DashboardItemsListAdapter
 
 class DashboardFragment : Fragment() {
 
@@ -124,20 +118,20 @@ class DashboardFragment : Fragment() {
             // START
             adapter.setOnClickListener(object :
                 DashboardItemsListAdapter.OnClickListener {
-                override fun onClick(position: Int, product: Product) {
+                override fun onClick(position: Int, product: Posts) {
 
                     // TODO Step 7: Launch the product details screen from the dashboard.
                     // START
                     val intent = Intent(context, ProductDetailsActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_PRODUCT_ID, product.product_id)
+                    intent.putExtra(Constants.EXTRA_PRODUCT_ID, product.postID)
                     startActivity(intent)
                     // END
                 }
             })
             // END
         } else {
-            rv_dashboard_items.visibility = View.GONE
-            tv_no_dashboard_items_found.visibility = View.VISIBLE
+            binding.dashboardItems.visibility = View.GONE
+            binding.noItemText.visibility = View.VISIBLE
         }
     }
 

@@ -5,10 +5,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.onlineshopapp.GlideLoader
 import com.example.myapplication.onlineshopapp.R
 import com.example.myapplication.onlineshopapp.model.Posts
-import com.myshoppal.R
 
 /**
  * A adapter class for dashboard items list.
@@ -33,7 +34,7 @@ open class DashboardItemsListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MyViewHolder(
             LayoutInflater.from(context).inflate(
-                R.layout.item_dashboard_layout,
+                R.layout.dashboard_items_layout,
                 parent,
                 false
             )
@@ -58,9 +59,9 @@ open class DashboardItemsListAdapter(
 
             GlideLoader(context).loadProductPicture(
                 model.image,
-                holder.itemView.iv_dashboard_item_image
+                holder.itemView.findViewById(R.id.iv_dashboard_item_image)
             )
-            holder.itemView.tv_dashboard_item_title.text = model.title
+            holder.itemView.findViewById<TextView>(R.id.dashboard_item_title).text = model.title
             holder.itemView.tv_dashboard_item_price.text = "$${model.price}"
 
             // TODO Step 5: Assign the on click event for item view and pass the required params in the on click function.

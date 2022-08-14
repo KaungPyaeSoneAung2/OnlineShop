@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.myapplication.onlineshopapp.Constants
 import com.example.myapplication.onlineshopapp.activities.*
 import com.example.myapplication.onlineshopapp.model.Posts
@@ -152,6 +154,47 @@ class FireStore {
                 )
             }
     }
+
+    fun getProductsList(fragment: Fragment) {
+        // The collection name for PRODUCTS
+        mFireStore.collection(Constants.PRODUCTS)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+
+                // Here we get the list of boards in the form of documents.
+                Log.e("Products List", document.documents.toString())
+
+                // Here we have created a new instance for Products ArrayList.
+                val productsList: ArrayList<Posts> = ArrayList()
+
+                // A for loop as per the list of documents to convert them into Products ArrayList.
+                for (i in document.documents) {
+
+                    val product = i.toObject(Posts::class.java)
+                    product!!.postID = i.id
+
+                    productsList.add(product)
+                }
+
+                when (fragment) {
+                    is ProductsFragment -> {
+                        fragment.successProductsListFromFireStore(productsList)
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                // Hide the progress dialog if there is any error based on the base class instance.
+                when (fragment) {
+                    is ProductsFragment -> {
+                        Log.e("Product fragment error","There is an error with firestore and products fragment",e)
+                    }
+                }
+                Log.e("Get Product List", "Error while getting product list.", e)
+            }
+    }
+
+
     fun getDashboardItemsList(fragment: DashboardFragment) {
         // The collection name for PRODUCTS
         mFireStore.collection(Constants.PRODUCTS)
@@ -213,15 +256,11 @@ class FireStore {
                 Log.e(activity.javaClass.simpleName, document.toString())
 
                 // Convert the snapshot to the object of Product data model class.
-                val product = document.toObject(Product::class.java)!!
+                val product = document.toObject(Posts::class.java)!!
 
                 activity.productDetailsSuccess(product)
             }
             .addOnFailureListener { e ->
-
-                // Hide the progress dialog if there is an error.
-                activity.hideProgressDialog()
-
                 Log.e(activity.javaClass.simpleName, "Error while getting the product details.", e)
             }
     }

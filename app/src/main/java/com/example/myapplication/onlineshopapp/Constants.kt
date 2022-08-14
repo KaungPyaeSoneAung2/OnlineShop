@@ -25,6 +25,8 @@ object Constants {
     const val ADDRESS: String = "address"
     const val PROFILE_COMPLETE: String = "profileComple"
 
+    const val USER_ID:String="user_id"
+
     const val EXTRA_PRODUCT_ID: String = "extra_product_id"
     const val PRODUCTS: String = "products"
     const val PRODUCT_IMAGE: String = "Product_Image"

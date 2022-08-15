@@ -39,7 +39,7 @@ open class UserProductsAdapter(
             GlideLoader(context).loadProductPicture(model.image, holder.itemView.findViewById(R.id.item_image))
 
             holder.itemView.findViewById<TextView>(R.id.item_name).text = model.title
-            holder.itemView.findViewById<TextView>(R.id.item_price).text = "$${model.price}"
+            holder.itemView.findViewById<TextView>(R.id.item_price).text = "${model.price}MMK"
 
             holder.itemView.findViewById<ImageButton>(R.id.delete_product).setOnClickListener {
 

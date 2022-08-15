@@ -71,7 +71,7 @@ class FireStore {
                     is  SettingsActivity->{
                         activity.UserDetailsSuccess(user)
                     }
-                    is ProductDetailsActivity ->{
+                    is AddProductActivity ->{
                         activity.UserDetailSuccess(user)
                     }
                     is UpdateProfileActivity ->{
@@ -256,7 +256,6 @@ class FireStore {
 
                 // Convert the snapshot to the object of Product data model class.
                 val product = document.toObject(Product::class.java)!!
-
                 activity.productDetailsSuccess(product)
             }
             .addOnFailureListener { e ->

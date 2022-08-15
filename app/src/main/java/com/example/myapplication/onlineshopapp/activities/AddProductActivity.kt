@@ -25,7 +25,9 @@ import java.io.IOException
 class AddProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddProductBinding
     private var mSelectedImageFileUri: Uri? = null
-
+    private lateinit var address:String
+    private lateinit var phNumber:String
+    private lateinit var email:String
     private var mProductImageURL: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +58,7 @@ class AddProductActivity : AppCompatActivity() {
 
         }
         setupActionBar()
+        getUserDetails()
     }
 
     override fun onRequestPermissionsResult(
@@ -169,14 +172,20 @@ class AddProductActivity : AppCompatActivity() {
         uploadProductDetails()
     }
 
+    private fun getUserDetails() {
+        FireStore().getUserDetails(this)
+    }
+    fun UserDetailSuccess(user: User){
+        phNumber=user.mobile.toString()
+        address=user.address
+        email =user.email
+    }
     private fun uploadProductDetails() {
 
         val username =
             this.getSharedPreferences(Constants.NICESHOP_PREFERENCES, Context.MODE_PRIVATE)
                 .getString(Constants.LOGGED_IN_USERNAME, "")!!
-        val mobileNumber =
-            this.getSharedPreferences(Constants.NICESHOP_PREFERENCES, Context.MODE_PRIVATE)
-                .getString(Constants.MOBILE, "")!!
+
         val product = Product(
             FireStore().getCurrentUserID(),
             username,
@@ -185,6 +194,10 @@ class AddProductActivity : AppCompatActivity() {
             binding.descriptionProduct.text.toString().trim { it <= ' ' },
             binding.qtyProduct.text.toString().trim { it <= ' ' },
             mProductImageURL,
+            "",
+            phNumber,
+            address,
+            email
         )
 
         FireStore().uploadProductDetails(this@AddProductActivity, product)

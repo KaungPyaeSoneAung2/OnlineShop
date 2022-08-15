@@ -29,7 +29,6 @@ class ProductDetailsActivity : AppCompatActivity() {
         setupActionBar()
 
         getProductDetails()
-        getUserDetails()
     }
 
     private fun setupActionBar() {
@@ -61,22 +60,31 @@ class ProductDetailsActivity : AppCompatActivity() {
         binding.productDetailsPrice.text = "${product.price}MMk"
         binding.productDetailsDescription.text = product.description
         binding.productDetailsQuantity.text = "Stock :${product.stock_quantity}"
-    }
-
-    private fun getUserDetails() {
-        FireStore().getUserDetails(this)
-    }
-    @SuppressLint("SetTextI18n")
-    fun UserDetailSuccess(user: User) {
-        if(user.mobile!=0L){
-        binding.productContactNumber.text= "Contact Number: ${user.mobile}"}
-        else{
-            binding.productContactNumber.text="Contact Email : ${user.email}"
+        if (product.phNumber != "0") {
+            binding.productContactNumber.text = "Contact Number: ${product.phNumber}"
+        } else {
+            binding.productContactNumber.text = "Contact Email : ${product.email}"
         }
-        if(user.address!=" "){
-            binding.addressDetails.text= "Address: ${user.address}"}
+        if(product.address!=" "){
+            binding.addressDetails.text= "Address: ${product.address}"}
         else{
             binding.addressDetails.text="Address : Not submitted}"
         }
     }
+//    private fun getUserDetails() {
+//        FireStore().getUserDetails(this)
+//    }
+//    @SuppressLint("SetTextI18n")
+//    fun UserDetailSuccess(user: User) {
+//        if(user.mobile!=0L){
+//        binding.productContactNumber.text= "Contact Number: ${user.mobile}"}
+//        else{
+//            binding.productContactNumber.text="Contact Email : ${user.email}"
+//        }
+//        if(user.address!=" "){
+//            binding.addressDetails.text= "Address: ${user.address}"}
+//        else{
+//            binding.addressDetails.text="Address : Not submitted}"
+//        }
+//    }
 }

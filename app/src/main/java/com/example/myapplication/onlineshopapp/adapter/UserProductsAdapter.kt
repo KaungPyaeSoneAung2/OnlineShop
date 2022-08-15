@@ -47,7 +47,6 @@ open class UserProductsAdapter(
             }
 
             holder.itemView.setOnClickListener {
-                // Launch Product details screen.
                 val intent = Intent(context, ProductDetailsActivity::class.java)
                 intent.putExtra(Constants.EXTRA_PRODUCT_ID, model.product_id)
                 context.startActivity(intent)

@@ -3,6 +3,7 @@ package com.example.myapplication.onlineshopapp.ui.dashboard
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -58,6 +59,9 @@ class DashboardFragment : Fragment() {
             R.id.action_setting -> {
                 startActivity(Intent(activity, SettingsActivity::class.java))
                 return true
+            }
+            R.id.action_Search ->{
+                Toast.makeText(activity, "Couldn't Finish it due to errors \n Gomenasai", Toast.LENGTH_SHORT).show()
             }
 
         }

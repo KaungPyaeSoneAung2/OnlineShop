@@ -30,6 +30,7 @@ class SignUpActivity : AppCompatActivity() {
         }
         binding.buttonSignUp.setOnClickListener {
             registerUser()
+            Intent(this,DashBoardActivity::class.java).also { startActivity(it) }
         }
 
     }

@@ -74,6 +74,9 @@ class FireStore {
                     is ProductDetailsActivity ->{
                         activity.UserDetailSuccess(user)
                     }
+                    is UpdateProfileActivity ->{
+                        activity.UserDetailSuccess(user)
+                    }
                 }
             }
             .addOnFailureListener { e ->

@@ -2,6 +2,7 @@ package com.example.myapplication.onlineshopapp.activities
 
 import com.example.myapplication.onlineshopapp.GlideLoader
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -61,18 +62,17 @@ class UpdateProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUpdateProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        userDetails = User()
-        if (intent.hasExtra(Constants.EXTRA_USER_DETAIL)) {
-            userDetails = intent.getParcelableExtra(Constants.EXTRA_USER_DETAIL)!!
-        }
-        binding.firstNameUpdate.isEnabled = false
-        binding.firstNameUpdate.setText(userDetails.firstName)
+        getUserDetails()
+        genderSelectioinButton()
+//        binding.firstNameUpdate.isEnabled = false
+//        binding.firstNameUpdate.setText(userDetails.firstName)
+//
+//        binding.lastNameUpdate.isEnabled = false
+//        binding.lastNameUpdate.setText(userDetails.lastName)
+//
+//        binding.emailUpdate.isEnabled = false
+//        binding.emailUpdate.setText(userDetails.email)
 
-        binding.lastNameUpdate.isEnabled = false
-        binding.lastNameUpdate.setText(userDetails.lastName)
-
-        binding.emailUpdate.isEnabled = false
-        binding.emailUpdate.setText(userDetails.email)
 
         binding.imageUserUpdate.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
@@ -103,7 +103,7 @@ class UpdateProfileActivity : AppCompatActivity() {
 
             }
         }
-        genderSelectioinButton()
+
         binding.backButton.setOnClickListener{
             onBackPressed()
         }
@@ -217,6 +217,34 @@ class UpdateProfileActivity : AppCompatActivity() {
 
         return genderResult
     }
+
+
+    private fun getUserDetails() {
+        FireStore().getUserDetails(this)
+    }
+
+    //Get submitted user details or change As you wish
+    @SuppressLint("SetTextI18n")
+    fun UserDetailSuccess(user: User) {
+        GlideLoader(this).loadUserPicture(user.image, binding.imageUserUpdate)
+        if(user.firstName!=" "){
+            binding.firstNameUpdate.setText(user.firstName)
+        }
+        if(user.lastName!=" "){
+            binding.lastNameUpdate.setText(user.lastName)
+        }
+        binding.emailUpdate.setText(user.email)
+        binding.emailUpdate.isEnabled=false
+
+        if(user.mobile!=0L){
+            binding.phNumberUpdate.setText(user.mobile.toString())
+        }
+        if(user.address!=" ") {
+            binding.addressUpdate.setText(user.address)
+        }
+    }
+    }
+
 //    private val getResult =
 //        registerForActivityResult(
 //            ActivityResultContracts.StartActivityForResult()
@@ -241,4 +269,3 @@ class UpdateProfileActivity : AppCompatActivity() {
 //                Toast.makeText(this, "Result wasn't OK", Toast.LENGTH_SHORT).show()
 //            }
 //        }
-}

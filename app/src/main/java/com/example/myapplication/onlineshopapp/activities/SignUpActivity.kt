@@ -116,6 +116,6 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     fun userRegistrationSuccess(){
-        Toast.makeText(this, "Welcome to our Store Mr. ${binding.firstNameSignUp.text.toString()}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Welcome to our Store Mr. ${binding.firstNameSignUp.text}", Toast.LENGTH_SHORT).show()
     }
 }

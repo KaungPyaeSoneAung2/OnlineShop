@@ -10,11 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.onlineshopapp.R
-import com.example.myapplication.onlineshopapp.activities.SettingsActivity
+import com.example.myapplication.onlineshopapp.activities.AddProductActivity
 import com.example.myapplication.onlineshopapp.adapter.UserProductsAdapter
 import com.example.myapplication.onlineshopapp.databinding.FragmentProductsBinding
 import com.example.myapplication.onlineshopapp.firestore.FireStore
-import com.example.myapplication.onlineshopapp.model.Posts
+import com.example.myapplication.onlineshopapp.model.Product
 
 class ProductsFragment : Fragment() {
 
@@ -43,7 +43,6 @@ class ProductsFragment : Fragment() {
         val textView: TextView = binding.noProductsFound
         homeViewModel.text.observe(viewLifecycleOwner) {
             //textView.text = "This is home Fragment"
-
         }
         return root
     }
@@ -63,7 +62,7 @@ class ProductsFragment : Fragment() {
         val id= item.itemId
         when(id){
             R.id.addProductMenu -> {
-                startActivity(Intent(activity, SettingsActivity::class.java))
+                startActivity(Intent(activity, AddProductActivity::class.java))
                 return true
             }
         }
@@ -87,7 +86,7 @@ class ProductsFragment : Fragment() {
      *
      * @param productsList Will receive the product list from cloud firestore.
      */
-    fun successProductsListFromFireStore(productsList: ArrayList<Posts>) {
+    fun successProductsListFromFireStore(productsList: ArrayList<Product>) {
 
 
         if (productsList.size > 0) {

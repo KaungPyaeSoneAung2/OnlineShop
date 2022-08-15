@@ -1,7 +1,5 @@
 package com.example.myapplication.onlineshopapp.ui.dashboard
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -15,7 +13,7 @@ import com.example.myapplication.onlineshopapp.activities.ProductDetailsActivity
 import com.example.myapplication.onlineshopapp.activities.SettingsActivity
 import com.example.myapplication.onlineshopapp.databinding.FragmentDashboardBinding
 import com.example.myapplication.onlineshopapp.firestore.FireStore
-import com.example.myapplication.onlineshopapp.model.Posts
+import com.example.myapplication.onlineshopapp.model.Product
 import com.myshoppal.ui.adapters.DashboardItemsListAdapter
 
 class DashboardFragment : Fragment() {
@@ -23,8 +21,6 @@ class DashboardFragment : Fragment() {
     private var _binding: FragmentDashboardBinding? = null
     private var dashBoardActivity:DashBoardActivity = DashBoardActivity()
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +34,7 @@ class DashboardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+            ViewModelProvider(this)[DashboardViewModel::class.java]
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -63,6 +59,7 @@ class DashboardFragment : Fragment() {
                 startActivity(Intent(activity, SettingsActivity::class.java))
                 return true
             }
+
         }
         return super.onOptionsItemSelected(item)
     }
@@ -85,20 +82,12 @@ class DashboardFragment : Fragment() {
         getDashboardItemsList()
     }
 
-    /**
-     * A function to get the dashboard items list from cloud firestore.
-     */
     private fun getDashboardItemsList() {
 
         FireStore().getDashboardItemsList(this@DashboardFragment)
     }
 
-    /**
-     * A function to get the success result of the dashboard items from cloud firestore.
-     *
-     * @param dashboardItemsList
-     */
-    fun successDashboardItemsList(dashboardItemsList: ArrayList<Posts>) {
+    fun successDashboardItemsList(dashboardItemsList: ArrayList<Product>) {
 
 
         if (dashboardItemsList.size > 0) {
@@ -112,23 +101,14 @@ class DashboardFragment : Fragment() {
             val adapter = DashboardItemsListAdapter(requireActivity(), dashboardItemsList)
             binding.dashboardItems.adapter = adapter
 
-            //TODO Step 6: Define the onclick listener here that is defined in the adapter class and handle the click on an item in the base class.
-            // Earlier we have done is a different way of creating the function and calling it from the adapter class based on the instance of the class.
-
-            // START
             adapter.setOnClickListener(object :
                 DashboardItemsListAdapter.OnClickListener {
-                override fun onClick(position: Int, product: Posts) {
+                override fun onClick(position: Int, product: Product) {
 
-                    // TODO Step 7: Launch the product details screen from the dashboard.
-                    // START
-                    val intent = Intent(context, ProductDetailsActivity::class.java)
-                    intent.putExtra(Constants.EXTRA_PRODUCT_ID, product.postID)
-                    startActivity(intent)
-                    // END
+                    Intent(context,ProductDetailsActivity::class.java).putExtra(Constants.EXTRA_PRODUCT_ID,product.product_id).also { startActivity(it) }
+
                 }
             })
-            // END
         } else {
             binding.dashboardItems.visibility = View.GONE
             binding.noItemText.visibility = View.VISIBLE

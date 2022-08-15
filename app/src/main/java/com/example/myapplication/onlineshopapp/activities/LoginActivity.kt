@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
-        ///////////////////////////////////////////////////////////////////////////
+        ///////// Line of danger/ Firebase google login/////////////////////////////////////////////////////////////////
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -62,6 +62,7 @@ class LoginActivity : AppCompatActivity() {
             startActivityForResult(signInIntent,RC_GOOGLE_SIGN_IN)
         }
 
+        ///////// Line of danger/ Firebase google login/////////////////////////////////////////////////////////////////
     }
 
     private fun validateLoginDetails():Boolean {
@@ -104,6 +105,7 @@ class LoginActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         updateUI(currentUser)
     }
+
     //This is firebase Credit system Don't touch
     private fun updateUI(user: FirebaseUser?) {
         //this go to main activtiy

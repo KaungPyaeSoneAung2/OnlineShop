@@ -29,6 +29,9 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+        binding.editProfile.setOnClickListener {
+            Intent(this,UpdateProfileActivity::class.java).also { startActivity(it) }
+        }
         getUserDetails()
     }
 

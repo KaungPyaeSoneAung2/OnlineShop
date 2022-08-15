@@ -2,15 +2,13 @@ package com.example.myapplication.onlineshopapp.firestore
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.myapplication.onlineshopapp.Constants
 import com.example.myapplication.onlineshopapp.activities.*
-import com.example.myapplication.onlineshopapp.model.Posts
+import com.example.myapplication.onlineshopapp.model.Product
 import com.example.myapplication.onlineshopapp.model.User
 import com.example.myapplication.onlineshopapp.ui.dashboard.DashboardFragment
 import com.example.myapplication.onlineshopapp.ui.home.ProductsFragment
@@ -73,6 +71,9 @@ class FireStore {
                     is  SettingsActivity->{
                         activity.UserDetailsSuccess(user)
                     }
+                    is ProductDetailsActivity ->{
+                        activity.UserDetailSuccess(user)
+                    }
                 }
             }
             .addOnFailureListener { e ->
@@ -104,7 +105,7 @@ class FireStore {
     fun uploadImageToCloudStorage(activity: Activity, imageFileUri: Uri?, imageType:String?) {
         //used to determine image file path
         val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
-            Constants.USERIMAGE + System.currentTimeMillis() + " "
+            Constants.Image + System.currentTimeMillis() + " "
                     + Constants.getFileExtension(
                 activity, imageFileUri
             )
@@ -122,6 +123,9 @@ class FireStore {
                         Log.e("Downloadable Image URL", uri.toString())
                         activity.imageUploadSuccess(uri.toString())
                     }
+                    is AddProductActivity ->{
+                    activity.imageUploadSuccess(uri.toString())
+                    }
                 }
             }
         }
@@ -134,7 +138,7 @@ class FireStore {
                 )
             }
     }
-    fun uploadProductDetails(activity: AddProductActivity, productInfo: Posts) {
+    fun uploadProductDetails(activity: AddProductActivity, productInfo: Product) {
 
         mFireStore.collection(Constants.PRODUCTS)
             .document()
@@ -146,7 +150,6 @@ class FireStore {
                 activity.productUploadSuccess()
             }
             .addOnFailureListener { e ->
-
                 Log.e(
                     activity.javaClass.simpleName,
                     "Error while uploading the product details.",
@@ -166,13 +169,13 @@ class FireStore {
                 Log.e("Products List", document.documents.toString())
 
                 // Here we have created a new instance for Products ArrayList.
-                val productsList: ArrayList<Posts> = ArrayList()
+                val productsList: ArrayList<Product> = ArrayList()
 
                 // A for loop as per the list of documents to convert them into Products ArrayList.
                 for (i in document.documents) {
 
-                    val product = i.toObject(Posts::class.java)
-                    product!!.postID = i.id
+                    val product = i.toObject(Product::class.java)
+                    product!!.product_id = i.id
 
                     productsList.add(product)
                 }
@@ -184,10 +187,10 @@ class FireStore {
                 }
             }
             .addOnFailureListener { e ->
-                // Hide the progress dialog if there is any error based on the base class instance.
                 when (fragment) {
                     is ProductsFragment -> {
                         Log.e("Product fragment error","There is an error with firestore and products fragment",e)
+
                     }
                 }
                 Log.e("Get Product List", "Error while getting product list.", e)
@@ -196,26 +199,21 @@ class FireStore {
 
 
     fun getDashboardItemsList(fragment: DashboardFragment) {
-        // The collection name for PRODUCTS
         mFireStore.collection(Constants.PRODUCTS)
-            .get() // Will get the documents snapshots.
+            .get()
             .addOnSuccessListener { document ->
 
-                // Here we get the list of boards in the form of documents.
                 Log.e(fragment.javaClass.simpleName, document.documents.toString())
 
-                // Here we have created a new instance for Products ArrayList.
-                val productsList: ArrayList<Posts> = ArrayList()
+                val productsList: ArrayList<Product> = ArrayList()
 
-                // A for loop as per the list of documents to convert them into Products ArrayList.
                 for (i in document.documents) {
 
-                    val post = i.toObject(Posts::class.java)!!
-                     post.postID= i.id
+                    val post = i.toObject(Product::class.java)!!
+                     post.product_id= i.id
                     productsList.add(post)
                 }
 
-                // Pass the success result to the base fragment.
                 fragment.successDashboardItemsList(productsList)
             }
             .addOnFailureListener { e ->
@@ -230,7 +228,6 @@ class FireStore {
             .delete()
             .addOnSuccessListener {
 
-                // Notify the success result to the base class.
                 fragment.productDeleteSuccess()
             }
             .addOnFailureListener { e ->
@@ -246,17 +243,16 @@ class FireStore {
 
     fun getProductDetails(activity: ProductDetailsActivity, productId: String) {
 
-        // The collection name for PRODUCTS
         mFireStore.collection(Constants.PRODUCTS)
             .document(productId)
-            .get() // Will get the document snapshots.
+            .get()
             .addOnSuccessListener { document ->
 
                 // Here we get the product details in the form of document.
                 Log.e(activity.javaClass.simpleName, document.toString())
 
                 // Convert the snapshot to the object of Product data model class.
-                val product = document.toObject(Posts::class.java)!!
+                val product = document.toObject(Product::class.java)!!
 
                 activity.productDetailsSuccess(product)
             }

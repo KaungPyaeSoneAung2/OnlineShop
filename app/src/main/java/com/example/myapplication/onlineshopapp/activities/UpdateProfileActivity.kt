@@ -95,7 +95,7 @@ class UpdateProfileActivity : AppCompatActivity() {
             if (validateUserInfos()) {
 
                 if (selectedImageUri != null) {
-                    FireStore().uploadImageToCloudStorage(this, selectedImageUri,Constants.USERIMAGE)
+                    FireStore().uploadImageToCloudStorage(this, selectedImageUri,Constants.USER_PROFILE_IMAGE)
                 }
                 else{
                     updateUserProfileDetails()
@@ -103,8 +103,10 @@ class UpdateProfileActivity : AppCompatActivity() {
 
             }
         }
-
-
+        genderSelectioinButton()
+        binding.backButton.setOnClickListener{
+            onBackPressed()
+        }
     }
 
 
@@ -166,7 +168,7 @@ class UpdateProfileActivity : AppCompatActivity() {
 
     private fun updateUserProfileDetails() {
         val userHashMap = HashMap<String, Any>()
-        val genderResult = genderSelectioinButton(0)
+        val genderResult = genderSelectioinButton()
         val mobileNumber = binding.phNumberUpdate.text.toString().trim { it <= ' ' }
         if (mobileNumber.isNotEmpty()) {
             userHashMap[Constants.MOBILE] = mobileNumber.toLong()
@@ -198,8 +200,8 @@ class UpdateProfileActivity : AppCompatActivity() {
     }
 
 
-    private fun genderSelectioinButton(genderRes: Int): Int {
-        var genderResult = genderRes
+    private fun genderSelectioinButton(): Int {
+        var genderResult=0
         binding.maleUpdate.setOnClickListener {
             binding.maleUpdate.setBackgroundColor(resources.getColor(R.color.purple_500))
             binding.femaleUpdate.setBackgroundColor(resources.getColor(R.color.white))

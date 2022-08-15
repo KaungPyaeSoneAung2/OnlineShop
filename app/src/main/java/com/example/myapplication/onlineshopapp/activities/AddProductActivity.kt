@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -18,7 +17,8 @@ import com.example.myapplication.onlineshopapp.GlideLoader
 import com.example.myapplication.onlineshopapp.R
 import com.example.myapplication.onlineshopapp.databinding.ActivityAddProductBinding
 import com.example.myapplication.onlineshopapp.firestore.FireStore
-import com.example.myapplication.onlineshopapp.model.Posts
+import com.example.myapplication.onlineshopapp.model.Product
+import com.example.myapplication.onlineshopapp.model.User
 import java.io.IOException
 
 
@@ -26,13 +26,12 @@ class AddProductActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddProductBinding
     private var mSelectedImageFileUri: Uri? = null
 
-    // A global variable for uploaded product image URL.
     private var mProductImageURL: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityAddProductBinding.inflate(layoutInflater)
+        binding = ActivityAddProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.imageAddProduct.setOnClickListener{
+        binding.imageAddProduct.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.READ_EXTERNAL_STORAGE
@@ -41,9 +40,6 @@ class AddProductActivity : AppCompatActivity() {
             ) {
                 Constants.showImageChooser(this@AddProductActivity)
             } else {
-                /*Requests permissions to be granted to this application. These permissions
-                 must be requested in your manifest, they should not be granted to your app,
-                 and they should have protection level*/
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -51,8 +47,16 @@ class AddProductActivity : AppCompatActivity() {
                 )
             }
         }
-    }
 
+        binding.submitProduct.setOnClickListener {
+            if (validateProductDetails()) {
+
+                uploadProductImage()
+            }
+
+        }
+        setupActionBar()
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -61,11 +65,9 @@ class AddProductActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
-            //If permission is granted
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Constants.showImageChooser(this@AddProductActivity)
             } else {
-                //Displaying another toast if permission is not granted
                 Toast.makeText(
                     this,
                     "Request was denied",
@@ -90,7 +92,6 @@ class AddProductActivity : AppCompatActivity() {
                 )
             )
 
-            // The uri of selection image from phone storage.
             mSelectedImageFileUri = data.data!!
 
             try {
@@ -118,9 +119,6 @@ class AddProductActivity : AppCompatActivity() {
         binding.addProductToolBar.setNavigationOnClickListener { onBackPressed() }
     }
 
-    /**
-     * A function to validate the product details.
-     */
     private fun validateProductDetails(): Boolean {
         return when {
 
@@ -155,12 +153,7 @@ class AddProductActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * A function to upload the selected product image to firebase cloud storage.
-     */
     private fun uploadProductImage() {
-
-
         FireStore().uploadImageToCloudStorage(
             this@AddProductActivity,
             mSelectedImageFileUri,
@@ -168,12 +161,9 @@ class AddProductActivity : AppCompatActivity() {
         )
     }
 
-    /**
-     * A function to get the successful result of product image upload.
-     */
     fun imageUploadSuccess(imageURL: String) {
 
-        // Initialize the global image url variable.
+        // Change the local image address to global Url
         mProductImageURL = imageURL
 
         uploadProductDetails()
@@ -181,28 +171,25 @@ class AddProductActivity : AppCompatActivity() {
 
     private fun uploadProductDetails() {
 
-        // Get the logged in username from the SharedPreferences that we have stored at a time of login.
         val username =
             this.getSharedPreferences(Constants.NICESHOP_PREFERENCES, Context.MODE_PRIVATE)
                 .getString(Constants.LOGGED_IN_USERNAME, "")!!
-
-        // Here we get the text from editText and trim the space
-        val product = Posts(
+        val mobileNumber =
+            this.getSharedPreferences(Constants.NICESHOP_PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.MOBILE, "")!!
+        val product = Product(
             FireStore().getCurrentUserID(),
             username,
             binding.captionProduct.text.toString().trim { it <= ' ' },
             binding.priceProduct.text.toString().trim { it <= ' ' },
             binding.descriptionProduct.text.toString().trim { it <= ' ' },
-            binding.qtyProduct.text.toString().trim { it <= ' ' }.toInt(),
-            mProductImageURL
+            binding.qtyProduct.text.toString().trim { it <= ' ' },
+            mProductImageURL,
         )
 
         FireStore().uploadProductDetails(this@AddProductActivity, product)
     }
 
-    /**
-     * A function to return the successful result of Product upload.
-     */
     fun productUploadSuccess() {
         Toast.makeText(
             this@AddProductActivity,

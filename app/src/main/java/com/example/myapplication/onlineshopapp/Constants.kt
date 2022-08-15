@@ -15,12 +15,8 @@ object Constants {
     const val READ_STORAGE_PERMISSION_CODE = 2
     const val IMAGE_REQUEST_CODE = 1
 
-    const val MALE: String = "Male"
-    const val FEMALE: String = "Female"
-
     const val MOBILE: String = "mobile"
     const val GENDER: String = "gender"
-    const val USERIMAGE: String = "UserImage"
     const val Image:String="image"
     const val ADDRESS: String = "address"
     const val PROFILE_COMPLETE: String = "profileComple"
@@ -30,7 +26,7 @@ object Constants {
     const val EXTRA_PRODUCT_ID: String = "extra_product_id"
     const val PRODUCTS: String = "products"
     const val PRODUCT_IMAGE: String = "Product_Image"
-
+    const val USER_PROFILE_IMAGE: String = "User_Profile_Image"
 
 
 
